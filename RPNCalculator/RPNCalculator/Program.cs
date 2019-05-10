@@ -31,8 +31,16 @@ namespace RPNCalculator
             {
                 if (double.TryParse(item, out double op))
                 {
-                    output += item + " "; 
+                    output += item + " ";
                 }
+                else
+                {
+                    Operators.Push(item);                 
+                }
+            }
+            while (!Operators.IsEmpty())
+            {
+                output += Operators.Pop()+ " ";
             }
             return output;
         }
@@ -102,6 +110,18 @@ namespace RPNCalculator
         {
             count--;
             return elements[count];
+        }
+
+        public bool IsEmpty()
+        {
+            if (count == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
