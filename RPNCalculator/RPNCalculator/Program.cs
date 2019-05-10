@@ -24,9 +24,11 @@ namespace RPNCalculator
     class Stack<T>
     {
         int count;
+        T[] elements;
         Stack()
         {
             count = 0;
+            elements = new T[10];
         }
     }
 }
