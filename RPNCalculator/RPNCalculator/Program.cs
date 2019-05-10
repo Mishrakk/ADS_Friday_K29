@@ -17,6 +17,14 @@ namespace RPNCalculator
         }
         static double PostfixEvaluator(string expression)
         {
+            Stack<double> OperandStack = new Stack<double>();
+            foreach (var item in expression.Split(' '))
+            {
+                if (double.TryParse(item, out double operand))
+                {
+                    OperandStack.Push(operand);
+                }
+            }
             return 0;
         }
     }
@@ -26,7 +34,7 @@ namespace RPNCalculator
         int count;
         T[] elements;
 
-        Stack()
+        public Stack()
         {
             count = 0;
             elements = new T[10];
