@@ -7,8 +7,8 @@ namespace RPNCalculator
         static void Main(string[] args)
         {
             Console.WriteLine("Hello, this is RPN calculator");
-            string expression = "2 3 +";
-            double expectedOutput = 5;
+            string expression = "2 3 5 + *";
+            double expectedOutput = 16;
             double output = PostfixEvaluator(expression);
             Console.WriteLine("Expression: {0}", expression);
             Console.WriteLine("Expected output: {0}", expectedOutput);
@@ -41,7 +41,17 @@ namespace RPNCalculator
             {
                 return op1 + op2;
             }
-            else
+            else if (oper == "-")
+            {
+                return op1 - op2;
+            }
+            else if (oper == "*")
+            {
+                return op1 * op2;
+            }else if (oper == "/")
+            {
+                return op1 / op2;
+            }else 
             {
                 return 0;
 
