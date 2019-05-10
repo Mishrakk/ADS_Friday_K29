@@ -24,10 +24,31 @@ namespace RPNCalculator
                 {
                     OperandStack.Push(operand);
                 }
+                else
+                {
+                    double op2 = OperandStack.Pop();
+                    double op1 = OperandStack.Pop();
+                    double output = Evaluate(op1, op2, item);
+                    OperandStack.Push(output);
+                }
             }
-            return 0;
+            return OperandStack.Pop();
+
+        }
+        public static  double Evaluate(double op1, double op2, string oper)
+        {
+            if(oper == "+")
+            {
+                return op1 + op2;
+            }
+            else
+            {
+                return 0;
+
+            }
         }
     }
+
 
     public class Stack<T>
     {
