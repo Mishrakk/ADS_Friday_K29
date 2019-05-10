@@ -21,14 +21,27 @@ namespace RPNCalculator
         }
     }
 
-    class Stack<T>
+    public class Stack<T>
     {
         int count;
         T[] elements;
+
         Stack()
         {
             count = 0;
             elements = new T[10];
+        }
+
+        public void Push(T value)
+        {
+            elements[count] = value;
+            count++;
+        }
+
+        public T Pop()
+        {
+            count--;
+            return elements[count];
         }
     }
 }
