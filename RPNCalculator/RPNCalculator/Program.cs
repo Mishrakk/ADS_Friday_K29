@@ -14,6 +14,27 @@ namespace RPNCalculator
             Console.WriteLine("Expected output: {0}", expectedOutput);
             Console.WriteLine("Output: {0}", output);
 
+            Console.WriteLine("And now to transforming infix to postfix");
+            string infix = "2 + 3";
+            string expectedPostfix = "2 3 +";
+            string postfix = InfixToPostfix(infix);
+            Console.WriteLine("Infix: {0}", infix);
+            Console.WriteLine("Expected postfix: {0}", expectedPostfix);
+            Console.WriteLine("Postfix: {0}", postfix);
+
+        }
+        static string InfixToPostfix(string infix)
+        {
+            string output = "";
+            Stack<string> Operators = new Stack<string>();
+            foreach (var item in infix.Split(' '))
+            {
+                if (double.TryParse(item, out double op))
+                {
+                    output += item + " "; 
+                }
+            }
+            return output;
         }
         static double PostfixEvaluator(string expression)
         {
