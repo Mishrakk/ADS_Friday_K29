@@ -54,12 +54,25 @@ namespace CoinChange
             for (int currChange = 0; currChange < change + 1; currChange++)
             {
                 int coinCount = currChange;
-                int newCoin = -1;
+                int newCoin = 0;
 
                 foreach(int coin in coins)
                 {
+                    if (coin > currChange)
+                    {
+                        continue;
+                        
+                    }
+                    if (1 + minCoins[currChange - coin] < coinCount)
+                    {
+                        coinCount = 1 + minCoins[currChange - coin];
+                        newCoin = coin;
+                    }
 
                 }
+                minCoins[currChange] = coinCount;
+                firstCoinIndex[currChange] = newCoin;
+                
             }
         }
     }
