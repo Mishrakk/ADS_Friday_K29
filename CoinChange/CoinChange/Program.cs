@@ -13,8 +13,7 @@ namespace CoinChange
             Console.WriteLine("Available coins: {0}", string.Join(", ", Coins));
             Console.WriteLine("Change to be made: {0}", change);
             makeChangeGreedy(Coins, change);
-
-            Console.WriteLine(string.Join(", ", Coins));
+            makeChangeDynamic(Coins, change);
         }
 
         public static void makeChangeGreedy(int[] coinsTemp, int change)
@@ -54,10 +53,11 @@ namespace CoinChange
             for (int currChange = 0; currChange < change + 1; currChange++)
             {
                 int coinCount = currChange;
-                int newCoin = 0;
+                int newCoinIndex = 0;
 
-                foreach(int coin in coins)
+                for (int coinIndex = 0; coinIndex < coins.Length; coinIndex++)
                 {
+                    int coin = coins[coinIndex];
                     if (coin > currChange)
                     {
                         continue;
@@ -66,12 +66,12 @@ namespace CoinChange
                     if (1 + minCoins[currChange - coin] < coinCount)
                     {
                         coinCount = 1 + minCoins[currChange - coin];
-                        newCoin = coin;
+                        newCoinIndex = coinIndex;
                     }
 
                 }
                 minCoins[currChange] = coinCount;
-                firstCoinIndex[currChange] = newCoin;
+                firstCoinIndex[currChange] = newCoinIndex;
                 
             }
         }
