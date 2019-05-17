@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CoinChange
 {
@@ -12,19 +13,27 @@ namespace CoinChange
             Console.WriteLine("Available coins: {0}", string.Join(", ", Coins));
             Console.WriteLine("Change to be made: {0}", change);
             make_change(Coins, change);
-            
+
         }
-        public static void make_change(int[]coins,int change)
+        public static void make_change(int[] coins, int change)
         {
             Array.Sort(coins);
             Array.Reverse(coins);
+            List<string> change_list = new List<string>();
 
-            foreach(int coin in coins)
+            foreach (int coin in coins)
             {
                 int how_many = change / coin;
+
+                if (how_many > 0)
+                {
+                    change_list.Add(how_many+"x"+coin);
+                }
+
                 change = change % coin;
-                Console.WriteLine(how_many+"x"+coin);
             }
-        } 
+
+            Console.WriteLine(string.Join(", ", change_list.ToArray()));
+        }
     }
 }
