@@ -7,8 +7,8 @@ namespace CoinChange
     {
         static void Main(string[] args)
         {
-            int[] Coins = { 1, 2, 5, 10, 20, 50 };
-            int change = 47;
+            int[] Coins = { 1, 3, 4 };
+            int change = 6;
             Console.WriteLine("Hello, this is coin change calculator");
             Console.WriteLine("Available coins: {0}", string.Join(", ", Coins));
             Console.WriteLine("Change to be made: {0}", change);
@@ -61,19 +61,36 @@ namespace CoinChange
                     if (coin > currChange)
                     {
                         continue;
-                        
                     }
                     if (1 + minCoins[currChange - coin] < coinCount)
                     {
                         coinCount = 1 + minCoins[currChange - coin];
                         newCoinIndex = coinIndex;
                     }
-
                 }
                 minCoins[currChange] = coinCount;
                 firstCoinIndex[currChange] = newCoinIndex;
-                
             }
+
+            int currChange2 = change;
+            int[] coincount = new int[arrCoins.Length];
+            List<string> change_list = new List<string>();
+
+            while (currChange2>0)
+            {
+                int coin = coins[firstCoinIndex[currChange2]];
+                coincount[firstCoinIndex[currChange2]]++;
+                currChange2 -= coin;
+            }
+            for (int i = 0; i < coincount.Length; i++)
+            {
+                if (coincount[i]>0)
+                {
+                    change_list.Add(coincount[i] + "x" + coins[i]);
+                }
+            }
+            Console.WriteLine(string.Join(", ", change_list.ToArray()));
+
         }
     }
 }
