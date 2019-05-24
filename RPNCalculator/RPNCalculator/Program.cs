@@ -16,7 +16,7 @@ namespace RPNCalculator
             */
 
             Console.WriteLine("And now to transforming infix to postfix");
-            string infix = "2 + 3";
+            string infix = "2 * 3 + 4";
             string expectedPostfix = "2 3 +";
             string postfix = InfixToPostfix(infix);
             double outputpostfix = PostfixEvaluator(postfix);
@@ -38,12 +38,17 @@ namespace RPNCalculator
                 }
                 else
                 {
-                    Operators.Push(item);                 
+                    while (!Operators.IsEmpty() && Precedence(Operators.Peek()) >= Precedence(item))
+                    {
+                        output += Operators.Pop() + " ";
+                    }
+
+                    Operators.Push(item);
                 }
             }
             while (!Operators.IsEmpty())
             {
-                output += Operators.Pop()+ " ";
+                output += Operators.Pop() + " ";
             }
             output = output.TrimEnd(' ');
             return output;
@@ -68,9 +73,9 @@ namespace RPNCalculator
             return OperandStack.Pop();
 
         }
-        public static  double Evaluate(double op1, double op2, string oper)
+        public static double Evaluate(double op1, double op2, string oper)
         {
-            if(oper == "+")
+            if (oper == "+")
             {
                 return op1 + op2;
             }
@@ -81,14 +86,31 @@ namespace RPNCalculator
             else if (oper == "*")
             {
                 return op1 * op2;
-            }else if (oper == "/")
+            }
+            else if (oper == "/")
             {
                 return op1 / op2;
-            }else 
+            }
+            else
             {
                 return 0;
 
             }
+        }
+
+        public static int Precedence(string op)
+        {
+            if (op == "^")
+            {
+                return 4;
+            }
+
+            else if (op == "/" || op == "*")
+            {
+                return 3;
+            }
+
+            return 2;
         }
     }
 
@@ -108,6 +130,11 @@ namespace RPNCalculator
         {
             elements[count] = value;
             count++;
+        }
+
+        public T Peek()
+        {
+            return elements[count - 1];
         }
 
         public T Pop()
