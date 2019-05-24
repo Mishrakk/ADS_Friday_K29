@@ -6,21 +6,24 @@ namespace RPNCalculator
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, this is RPN calculator");
+            /*Console.WriteLine("Hello, this is RPN calculator");
             string expression = "2 3 5 + *";
             double expectedOutput = 16;
             double output = PostfixEvaluator(expression);
             Console.WriteLine("Expression: {0}", expression);
             Console.WriteLine("Expected output: {0}", expectedOutput);
             Console.WriteLine("Output: {0}", output);
+            */
 
             Console.WriteLine("And now to transforming infix to postfix");
             string infix = "2 + 3";
             string expectedPostfix = "2 3 +";
             string postfix = InfixToPostfix(infix);
+            double outputpostfix = PostfixEvaluator(postfix);
             Console.WriteLine("Infix: {0}", infix);
             Console.WriteLine("Expected postfix: {0}", expectedPostfix);
             Console.WriteLine("Postfix: {0}", postfix);
+            Console.WriteLine("Output: {0}", outputpostfix);
 
         }
         static string InfixToPostfix(string infix)
@@ -42,6 +45,7 @@ namespace RPNCalculator
             {
                 output += Operators.Pop()+ " ";
             }
+            output = output.TrimEnd(' ');
             return output;
         }
         static double PostfixEvaluator(string expression)
