@@ -16,7 +16,7 @@ namespace RPNCalculator
             */
 
             Console.WriteLine("And now to transforming infix to postfix");
-            string infix = "2 * 3 + 4";
+            string infix = "2 * 3 ^ 4";
             string expectedPostfix = "2 3 +";
             string postfix = InfixToPostfix(infix);
             double outputpostfix = PostfixEvaluator(postfix);
@@ -36,9 +36,22 @@ namespace RPNCalculator
                 {
                     output += item + " ";
                 }
+                else if (item == "(")
+                {
+                    Operators.Push(item);
+                }
+                else if (item == ")")
+                {
+                    while (Operators.Peek() != "(")
+                    {
+                        output += Operators.Pop() + " ";
+                    }
+                    //This is to remove opening bracket from the stack
+                    Operators.Pop();
+                }
                 else
                 {
-                    while (!Operators.IsEmpty() && Precedence(Operators.Peek()) >= Precedence(item))
+                    while (!Operators.IsEmpty() && (Precedence(Operators.Peek()) > Precedence(item) || Precedence(Operators.Peek()) == Precedence(item) && Associativity(item) == "left"))
                     {
                         output += Operators.Pop() + " ";
                     }
@@ -91,13 +104,28 @@ namespace RPNCalculator
             {
                 return op1 / op2;
             }
+            else if (oper=="^")
+            {
+                return Math.Pow(op1, op2);
+            }
             else
             {
                 return 0;
 
             }
+        
         }
-
+        public static string Associativity(string op)
+        {
+            if(op=="^")
+            {
+                return "right";
+            }
+            else
+            {
+                return "left";
+            }
+        }
         public static int Precedence(string op)
         {
             if (op == "^")
@@ -109,8 +137,11 @@ namespace RPNCalculator
             {
                 return 3;
             }
-
-            return 2;
+            else if (op == "+" || op == "-")
+            {
+                return 2;
+            }
+            return -1;
         }
     }
 
